@@ -114,3 +114,5 @@ TEMPLATES = [
 
     },
 ]
+
+django_heroku.settings(locals())
