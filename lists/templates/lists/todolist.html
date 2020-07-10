@@ -20,6 +20,7 @@ $(document).ready(function() {
   $('#random').click(function() {
     var rando = $('ul li').random().trigger('click');
     $('.random').html(rando.text());
+    $('.random').show();
  });
 });
 </script>
@@ -37,7 +38,7 @@ $(document).ready(function() {
         <input type="submit" value="Submit">
   <input type="button" value="Random" id="random">
       </form>
-      <h6 class="random"></h6>
+      <h6 class="random" style="display: none;"></h6>
     </div>
     <div class="row">
       <div class="one-half column open-todos">

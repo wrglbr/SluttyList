@@ -5,6 +5,15 @@
   word-wrap: break-word;
 }
 
+.random {
+  background-color: lavenderblush;
+    border: 1px solid lavender;
+    padding: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    color: mediumvioletred;
+}
+
 /*title class behaves like h2*/
 .title {
   margin-top: 0;
