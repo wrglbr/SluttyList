@@ -6,8 +6,7 @@
 __pycache__
 
 # sqlite db
-*.db
-*.sqlite3
+
 
 # sublime related files
 *.sublime-project
