@@ -22,7 +22,7 @@ SECRET_KEY = '@e2(yx)v&tgh3_s=0yja-i!dpebxsz^dg47x)-k&kq_3zf*9e*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['23.235.204.230', 'sluttylist.bucatinii.com']
 
 
 # Application definition
@@ -83,8 +83,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
-
+STATIC_URL = 'https://sluttylist.bucatinii.com/'
+STATIC_ROOT = '/var/www/html/static/'
 
 # Login settings
 
@@ -114,3 +114,7 @@ TEMPLATES = [
 
     },
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+

@@ -3,9 +3,24 @@
 {% load static %}
 
 {% block js %}
-<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="{% static 'lists/js/lists.js' %}"></script>
 <script>
+
+// Check the main container is ready
+$('#todolist-list').ready(function(){
+    // Get each div
+    $('#todolist-list li div').each(function(){
+        // Get the content
+        var str = $(this).html();
+        // Set the regex string
+        var regex = /(https?:\/\/([-\w\.]+)+(:\d+)?(\/([\w\/_\.\-]*(\?\S+)?)?)?)/ig
+        // Replace plain text links by hyperlinks
+        var replaced_text = str.replace(regex, "<a href='$1' target='_blank'>$1</a>");
+        // Echo link
+        $(this).html(replaced_text);
+    });
+});
 
 $.fn.random = function()
 {
@@ -18,9 +33,11 @@ $.fn.random = function()
 };
 $(document).ready(function() {
   $('#random').click(function() {
-    var rando = $('ul li').random().trigger('click');
+    var rando = $('.listitem').random().trigger('click');
     $('.random').html(rando.text());
-    $('.random').show();
+    $('.random').css('opacity','1');
+    $('.randomtitle').css('opacity','1');
+
  });
 });
 </script>
@@ -29,29 +46,30 @@ $(document).ready(function() {
 {% block body %}
 <section class="header">
   <div class="row">
-    <div class="three columns value-prop"></div>
-    <div class="six columns">
-      <div class="title">{{todolist.title}}</div>
+    <div class="two columns value-prop"></div>
+    <div class="eight columns">
+      <div class="title">{{todolist.title}}<h1 style="margin-bottom: 0; padding-bottom: 0; font-size: 1;">by {{ todolist.creator }}</h1></div>
       <form action="{% url 'lists:add_todo' todolist.id %}" method=post>
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
   <input type="button" value="Random" id="random">
       </form>
-      <h6 class="random" style="display: none;"></h6>
+ <h6 style="opacity:0; display: inline-block; width: 10%; font-weight: 800;" class="randomtitle">Dare:</h6>     
+ <h6 class="random" style="text-align: left; display: inline-block; width: 80%; opacity: 0; font-size: 12px;"></h6>
     </div>
     <div class="row">
-      <div class="one-half column open-todos">
+      <div class="two-thirds column open-todos">
         <h6 class="docs-header open-todos">{{ todolist.count_open }} open</h6>
-        <ul>
+        <ul id="todolist-list">
           {% for todo in todolist.todos.all %}
             {% if not todo.is_finished %}
-              <li><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}"> {{ todo.description }}</li>
+              <li class="listitem"><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}"> <div class="listitem-desc">{{ todo.description }}</div></li>
             {% endif %}
           {% endfor %}
         </ul>
       </div>
-      <div class="one-half column finished-todos">
+      <div class="one-third column finished-todos">
         <h6 class="docs-header finished-todos">{{ todolist.count_finished }} finished</h6>
         <ul>
           {% for todo in todolist.todos.all %}
